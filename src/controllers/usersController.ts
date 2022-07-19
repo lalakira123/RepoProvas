@@ -12,3 +12,11 @@ export async function signUp(req: Request, res: Response){
 
   res.status(201).send('Usuário Criado!');
 }
+
+export async function signIn(req: Request, res: Response){
+  const user: CreateDataUser = req.body;
+
+  const token = await usersService.signIn(user);
+
+  res.status(200).send(token);
+}
