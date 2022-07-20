@@ -12,6 +12,5 @@ const testsRouter = Router();
 testsRouter.use(validateToken);
 
 testsRouter.post('/test', validateSchema(testsSchema), create);
-testsRouter.get('/');
 
 export default testsRouter;
