@@ -55,7 +55,7 @@ async function listByDiscipline(){
   const list = [];
 
   termsAndDisciplines.forEach((item1) => {
-    let object1 = {
+    let termsDisciplines = {
       ...item1,
       discipline: []
     };
@@ -85,8 +85,44 @@ async function listByDiscipline(){
         }
       })
 
-      object1.discipline.push(newObjectDiscipline);
+      termsDisciplines.discipline.push(newObjectDiscipline);
     })
+    list.push(termsDisciplines);
+  })
+
+  return list;
+}
+
+async function listByTeacher(){
+  const teachers = await teachersRepository.listTeachers();
+
+  const categoriesAndTestsAndteacherDiscipline = await categoriesRepository.listCategoriesAndTestsAndteacherDiscipline();
+
+  const list = [];
+
+  teachers.forEach((teacher) => {
+    let object1 = {
+      ...teacher,
+      category: []
+    }
+
+    categoriesAndTestsAndteacherDiscipline.forEach((item) => {
+      let category = {
+        ...item,
+        test: []
+      }
+
+      item.test.forEach((test) => {
+        if(test.teacherDiscipline.teacherId === teacher.id){
+          category.test.push(test);
+        }
+      })
+
+      if(category.test.length !== 0) {
+        object1.category.push(category);
+      }
+    })
+
     list.push(object1);
   })
 
@@ -95,5 +131,6 @@ async function listByDiscipline(){
 
 export {
   create,
-  listByDiscipline
+  listByDiscipline,
+  listByTeacher
 }

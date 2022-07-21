@@ -10,6 +10,13 @@ async function findByName(name: string){
   return teacher;
 }
 
+async function listTeachers(){
+  const teachers = await prisma.teacher.findMany();
+
+  return teachers;
+}
+
 export {
-  findByName
+  findByName,
+  listTeachers
 }

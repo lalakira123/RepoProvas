@@ -16,3 +16,9 @@ export async function listByDiscipline(req: Request, res: Response){
 
   res.status(200).send(tests);
 }
+
+export async function listByTeacher(req: Request, res: Response){
+  const tests = await testsService.listByTeacher();
+
+  res.status(200).send(tests);
+}
