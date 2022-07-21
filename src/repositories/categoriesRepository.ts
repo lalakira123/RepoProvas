@@ -10,7 +10,7 @@ async function findByName(name: string){
   return category;
 }
 
-async function listCategoriesAndTestsAndteacherDiscipline(){
+async function listCategoriesAndTestsAndTeacher(){
   const categories = await prisma.category.findMany({
     select: {
       name: true,
@@ -33,7 +33,31 @@ async function listCategoriesAndTestsAndteacherDiscipline(){
   return categories;
 }
 
+async function listCategoriesAndTestsAndDiscipline(){
+  const categories = await prisma.category.findMany({
+    select: {
+      name: true,
+      test: {
+        select: {
+          name: true,
+          pdfUrl: true,
+          teacherDiscipline: {
+            select: {
+              disciplineId: true,
+              teacherId: true,
+              discipline: true
+            }
+          }
+        }
+      }
+    }
+  })
+
+  return categories;
+}
+
 export { 
   findByName,
-  listCategoriesAndTestsAndteacherDiscipline
+  listCategoriesAndTestsAndTeacher,
+  listCategoriesAndTestsAndDiscipline
 }

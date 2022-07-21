@@ -50,7 +50,7 @@ async function create(test: BodyDataTest){
 async function listByDiscipline(){
   const termsAndDisciplines = await termsRepository.listTermsAndDisciplines();
   
-  const categoriesAndTestsAndteacherDiscipline = await categoriesRepository.listCategoriesAndTestsAndteacherDiscipline();
+  const categoriesAndTestsAndteacherDiscipline = await categoriesRepository.listCategoriesAndTestsAndTeacher();
 
   const list = [];
 
@@ -96,7 +96,7 @@ async function listByDiscipline(){
 async function listByTeacher(){
   const teachers = await teachersRepository.listTeachers();
 
-  const categoriesAndTestsAndteacherDiscipline = await categoriesRepository.listCategoriesAndTestsAndteacherDiscipline();
+  const categoriesAndTestsAndteacherDiscipline = await categoriesRepository.listCategoriesAndTestsAndDiscipline();
 
   const list = [];
 
