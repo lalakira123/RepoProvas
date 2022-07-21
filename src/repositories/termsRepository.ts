@@ -1,10 +1,15 @@
 import { prisma } from './../config/db.js';
 
-async function list(){
-  const terms = await prisma.term.findMany();
-  return terms;
+async function listTermsAndDisciplines(){
+  const termsAndDisciplines = await prisma.term.findMany({
+    include: {
+      discipline: true
+    }
+  });
+
+  return termsAndDisciplines;
 }
 
 export {
-  list
+  listTermsAndDisciplines
 }

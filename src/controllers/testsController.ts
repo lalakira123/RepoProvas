@@ -10,3 +10,9 @@ export async function create(req: Request, res: Response){
 
   res.status(201).send('A prova foi criada com sucesso!');
 }
+
+export async function listByDiscipline(req: Request, res: Response){
+  const tests = await testsService.listByDiscipline();
+
+  res.status(200).send(tests);
+}

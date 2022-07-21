@@ -7,6 +7,7 @@ import * as disciplinesRepository from './../repositories/disciplineRepository.j
 import * as teachersRepository from './../repositories/teachersRepository.js';
 import * as teachersDisciplinesRepository from './../repositories/teachersDisciplinesRepository.js';
 import * as testsRepository from './../repositories/testsRepository.js';
+import * as termsRepository from './../repositories/termsRepository.js';
 
 export interface BodyDataTest {
   name: string,
@@ -46,6 +47,53 @@ async function create(test: BodyDataTest){
   await testsRepository.create(testData);
 }
 
+async function listByDiscipline(){
+  const termsAndDisciplines = await termsRepository.listTermsAndDisciplines();
+  
+  const categoriesAndTestsAndteacherDiscipline = await categoriesRepository.listCategoriesAndTestsAndteacherDiscipline();
+
+  const list = [];
+
+  termsAndDisciplines.forEach((item1) => {
+    let object1 = {
+      ...item1,
+      discipline: []
+    };
+
+    item1.discipline.forEach((discipline) => {
+
+      let newObjectDiscipline = {
+        ...discipline,
+        category: []
+      }
+
+      categoriesAndTestsAndteacherDiscipline.forEach((item2) => {
+
+        let category = {
+          ...item2,
+          test: []
+        };
+        
+        item2.test.forEach((test) => {
+          if(test.teacherDiscipline.disciplineId === discipline.id){
+            category.test.push(test);
+          } 
+        })
+          
+        if(category.test.length !== 0) {
+          newObjectDiscipline.category.push(category);
+        }
+      })
+
+      object1.discipline.push(newObjectDiscipline);
+    })
+    list.push(object1);
+  })
+
+  return list;
+}
+
 export {
-  create 
+  create,
+  listByDiscipline
 }
