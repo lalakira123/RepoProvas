@@ -1,5 +1,8 @@
 import { faker } from '@faker-js/faker';
 import bcrypt from 'bcrypt';
+import supertest from 'supertest';
+
+import app from './../../src/app.js';
 
 import { prisma } from './../../src/config/db.js';
 
@@ -36,12 +39,16 @@ async function createUser(body: CreateUser){
   });
 }
 
-async function login(){
-  
+type Login = Omit<CreateUser, 'confirmPassword'>;
+
+async function login(body: Login){
+  const response = await supertest(app).post('/signin').send(body);
+  return response.text;
 }
 
 export {
   createValidBody,
   createInvalidBody,
-  createUser
+  createUser,
+  login
 }

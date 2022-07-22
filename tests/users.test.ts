@@ -74,4 +74,4 @@ describe('Test Route Users', () => {
 
 afterAll(async () => {
   await prisma.$disconnect();
-})
+});
