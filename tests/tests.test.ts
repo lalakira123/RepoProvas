@@ -5,11 +5,6 @@ import { prisma } from './../src/config/db.js';
 
 import * as usersFactory from './factories/usersFactory.js';
 import * as testsFactory from './factories/testsFactory.js';
-
-beforeEach(async () => {
-  await prisma.$executeRaw`DELETE FROM tests;`;
-  await prisma.$executeRaw`DELETE FROM users;`;
-});
   
 describe('Test Route Tests', () => {
   it('given a valid inputs on /test should create a new test', async () => {
@@ -22,7 +17,7 @@ describe('Test Route Tests', () => {
 
     const testBody = testsFactory.createValidBody();
 
-    const response = await supertest(app).post('/test').send(testBody).set('Authorization', token);
+    const response = await supertest(app).post('/test').send(testBody).set('Authorization', `Bearer ${token}`);
     expect(response.statusCode).toEqual(201);
   });
 
@@ -36,7 +31,7 @@ describe('Test Route Tests', () => {
 
     const testBody = testsFactory.createInvalidBody();
 
-    const response = await supertest(app).post('/test').send(testBody).set('Authorization', token);
+    const response = await supertest(app).post('/test').send(testBody).set('Authorization', `Bearer ${token}`);
     expect(response.statusCode).toEqual(404);
   });
 
@@ -48,7 +43,7 @@ describe('Test Route Tests', () => {
 
     const token = await usersFactory.login(body);
 
-    const response = await supertest(app).get('/test/discipline').set('Authorization', token);
+    const response = await supertest(app).get('/test/discipline').set('Authorization', `Bearer ${token}`);
     expect(response.statusCode).toEqual(200);
   });
 
@@ -60,7 +55,7 @@ describe('Test Route Tests', () => {
 
     const token = await usersFactory.login(body);
     
-    const response = await supertest(app).get('/test/teacher').set('Authorization', token);
+    const response = await supertest(app).get('/test/teacher').set('Authorization', `Bearer ${token}`);
     expect(response.statusCode).toEqual(200);
   });
 });
