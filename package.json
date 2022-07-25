@@ -5,7 +5,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "build": "tsc ./src/server.ts",
+    "build": "tsc",
     "start": "node dist/src/server.js",
     "test": "dotenv -e .env.test prisma migrate dev && cross-env NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -i",
     "dev": "nodemon src/server.ts"
@@ -17,7 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@faker-js/faker": "^7.3.0",
+    "@prisma/client": "^4.1.0",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
@@ -29,7 +29,7 @@
     "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
-    "@prisma/client": "^4.1.0",
+    "@faker-js/faker": "^7.3.0",
     "@types/bcrypt": "^5.0.0",
     "@types/cors": "^2.8.12",
     "@types/dotenv": "^8.2.0",
